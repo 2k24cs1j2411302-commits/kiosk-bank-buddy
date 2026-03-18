@@ -2,47 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --foreground: 0 0% 7%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 0 0% 7%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 0 0% 7%;
 
     --primary: 347 77% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 0 0% 0%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 7%;
 
-    --muted: 240 5% 96%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 240 5% 96%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 347 77% 96%;
+    --accent-foreground: 347 77% 40%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 347 77% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    --kiosk-dark: 220 20% 10%;
+    --kiosk-surface: 220 15% 15%;
+    --kiosk-glow: 347 77% 50%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 15%;
     --sidebar-primary: 347 77% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 0 0% 15%;
     --sidebar-border: 0 0% 88%;
     --sidebar-ring: 347 77% 50%;
@@ -56,5 +58,301 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .kiosk-shell {
+    background: hsl(var(--kiosk-dark));
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .kiosk-frame {
+    background: hsl(var(--background));
+    width: 100%;
+    max-width: 56rem;
+    height: 92vh;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px hsl(var(--kiosk-glow) / 0.15),
+      0 25px 80px -12px hsl(var(--kiosk-dark) / 0.8),
+      0 0 60px -20px hsl(var(--kiosk-glow) / 0.2);
+  }
+
+  .kiosk-header {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(347 85% 42%));
+    color: hsl(var(--primary-foreground));
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kiosk-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 40%, hsl(0 0% 100% / 0.08));
+  }
+
+  .kiosk-body {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+
+  .kiosk-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .kiosk-title::before {
+    content: '';
+    width: 5px;
+    height: 1.75rem;
+    background: hsl(var(--primary));
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  .kiosk-btn {
+    width: 100%;
+    height: 4.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .kiosk-btn:active {
+    transform: scale(0.98);
+  }
+
+  .kiosk-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .kiosk-btn-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(347 85% 42%));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 4px 14px -3px hsl(var(--primary) / 0.4);
+  }
+
+  .kiosk-btn-primary:hover:not(:disabled) {
+    box-shadow: 0 6px 20px -3px hsl(var(--primary) / 0.5);
+  }
+
+  .kiosk-btn-secondary {
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    box-shadow: 0 1px 3px hsl(0 0% 0% / 0.06);
+  }
+
+  .kiosk-btn-secondary:hover:not(:disabled) {
+    background: hsl(0 0% 93%);
+  }
+
+  .kiosk-btn-ghost {
+    background: transparent;
+    color: hsl(var(--muted-foreground));
+    box-shadow: none;
+    height: 3.5rem;
+    font-weight: 500;
+  }
+
+  .kiosk-card {
+    background: hsl(var(--secondary));
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border: 1px solid hsl(var(--border));
+  }
+
+  .kiosk-input {
+    width: 100%;
+    height: 3.5rem;
+    font-size: 1.125rem;
+    padding: 0 1rem;
+    border-radius: var(--radius);
+    border: 2px solid hsl(var(--border));
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .kiosk-input:focus {
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+  }
+
+  .kiosk-input-otp {
+    height: 5rem;
+    font-size: 2.5rem;
+    text-align: center;
+    letter-spacing: 0.75rem;
+    font-weight: 700;
+    font-family: 'Space Grotesk', monospace;
+  }
+
+  .service-grid-btn {
+    height: 7.5rem;
+    border-radius: var(--radius);
+    border: 2px solid hsl(var(--border));
+    background: hsl(var(--background));
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.15s ease;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .service-grid-btn:hover {
+    border-color: hsl(var(--primary));
+    background: hsl(var(--accent));
+    box-shadow: 0 4px 12px hsl(var(--primary) / 0.1);
+  }
+
+  .service-grid-btn:active {
+    transform: scale(0.97);
+  }
+
+  .service-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.625rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+
+  .service-icon-red {
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+  }
+
+  .service-icon-dark {
+    background: hsl(var(--foreground) / 0.08);
+    color: hsl(var(--foreground));
+  }
+
+  .chat-bubble {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 80%;
+  }
+
+  .chat-bubble-bot {
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    border-bottom-left-radius: 0.25rem;
+  }
+
+  .chat-bubble-user {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  .quick-chip {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: 1.5px solid hsl(var(--border));
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.1s ease;
+  }
+
+  .quick-chip:hover {
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary));
+    background: hsl(var(--accent));
+  }
+
+  .spinner {
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 4px solid hsl(var(--border));
+    border-top-color: hsl(var(--primary));
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .status-badge-success {
+    background: hsl(142 70% 94%);
+    color: hsl(142 70% 30%);
+  }
+
+  .status-badge-pending {
+    background: hsl(38 92% 94%);
+    color: hsl(38 92% 30%);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
   }
 }
