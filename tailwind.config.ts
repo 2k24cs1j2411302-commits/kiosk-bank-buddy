@@ -47,6 +47,11 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        kiosk: {
+          dark: "hsl(var(--kiosk-dark))",
+          surface: "hsl(var(--kiosk-surface))",
+          glow: "hsl(var(--kiosk-glow))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

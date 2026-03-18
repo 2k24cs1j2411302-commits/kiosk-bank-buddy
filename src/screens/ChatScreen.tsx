@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import KioskLayout from "@/components/KioskLayout";
-import BigButton from "@/components/BigButton";
 import { api } from "@/services/mockApi";
+import { Send, ArrowLeft } from "lucide-react";
 
 interface ChatMsg {
   role: "user" | "bot";
@@ -18,13 +18,18 @@ const quickActions = ["Check Balance", "Mini Statement", "Block Card", "Loan Inf
 
 const ChatScreen = ({ sessionId, onIntentDetected, onBack }: Props) => {
   const [chatLog, setChatLog] = useState<ChatMsg[]>([
-    { role: "bot", text: "Hello! How can I help you today? You can type a request or use the quick actions below." },
+    { role: "bot", text: "Hello! I'm your banking assistant. How can I help you today?" },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const chatRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  }, [chatLog, loading]);
 
   const sendMessage = async (text: string) => {
-    if (!text.trim()) return;
+    if (!text.trim() || loading) return;
     const newLog: ChatMsg[] = [...chatLog, { role: "user", text }];
     setChatLog(newLog);
     setInput("");
@@ -45,50 +50,47 @@ const ChatScreen = ({ sessionId, onIntentDetected, onBack }: Props) => {
 
   return (
     <KioskLayout title="AI Assistant" sessionId={sessionId}>
-      <div className="h-64 border-2 border-border rounded-lg p-4 mb-4 overflow-y-auto">
+      <div ref={chatRef} className="h-56 border border-border rounded-xl p-4 mb-4 overflow-y-auto bg-secondary/50">
         {chatLog.map((msg, i) => (
-          <div key={i} className={`mb-3 ${msg.role === "user" ? "text-right" : "text-left"}`}>
-            <span
-              className={`inline-block px-4 py-2 rounded-2xl text-lg ${
-                msg.role === "user"
-                  ? "bg-secondary text-secondary-foreground"
-                  : "bg-primary text-primary-foreground"
-              }`}
-            >
+          <div key={i} className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            <span className={`chat-bubble ${msg.role === "user" ? "chat-bubble-user" : "chat-bubble-bot"}`}>
               {msg.text}
             </span>
           </div>
         ))}
         {loading && (
-          <div className="text-left">
-            <span className="inline-block px-4 py-2 rounded-2xl bg-muted text-muted-foreground text-lg">
-              Typing...
-            </span>
+          <div className="flex justify-start">
+            <span className="chat-bubble chat-bubble-bot opacity-60">Typing...</span>
           </div>
         )}
       </div>
 
       <div className="flex gap-2 flex-wrap mb-4">
         {quickActions.map((a) => (
-          <button
-            key={a}
-            onClick={() => sendMessage(a)}
-            className="px-4 py-2 bg-secondary text-secondary-foreground rounded-lg font-semibold border-none cursor-pointer text-base"
-          >
-            {a}
-          </button>
+          <button key={a} onClick={() => sendMessage(a)} className="quick-chip">{a}</button>
         ))}
       </div>
 
-      <input
-        className="w-full h-14 text-lg px-4 mb-3 rounded-lg border-2 border-border bg-background text-foreground"
-        placeholder="Type your request..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-      />
-      <BigButton label="SEND" onClick={() => sendMessage(input)} disabled={loading} />
-      <BigButton label="GO BACK" onClick={onBack} variant="secondary" />
+      <div className="flex gap-2 mb-3">
+        <input
+          className="kiosk-input flex-1"
+          placeholder="Type your request..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+        />
+        <button
+          onClick={() => sendMessage(input)}
+          disabled={loading || !input.trim()}
+          className="kiosk-btn kiosk-btn-primary !w-16 !mb-0 flex-shrink-0"
+        >
+          <Send size={20} />
+        </button>
+      </div>
+
+      <button onClick={onBack} className="kiosk-btn kiosk-btn-ghost">
+        <ArrowLeft size={18} /> Back to Services
+      </button>
     </KioskLayout>
   );
 };
