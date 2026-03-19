@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { api } from "@/services/mockApi";
 import WelcomeScreen from "@/screens/WelcomeScreen";
-import ServicesScreen from "@/screens/ServicesScreen";
-import ChatScreen from "@/screens/ChatScreen";
+import DashboardScreen from "@/screens/DashboardScreen";
 import OtpScreen from "@/screens/OtpScreen";
 import ResultScreen, { ResultData } from "@/screens/ResultScreen";
 import AgentScreen from "@/screens/AgentScreen";
 import UpdateContactScreen from "@/screens/UpdateContactScreen";
 
-type Screen = "WELCOME" | "SERVICES" | "CHAT" | "OTP" | "RESULT" | "AGENT" | "UPDATE_CONTACT";
+type Screen = "WELCOME" | "DASHBOARD" | "OTP" | "RESULT" | "AGENT" | "UPDATE_CONTACT";
 
 const Index = () => {
   const [screen, setScreen] = useState<Screen>("WELCOME");
@@ -20,10 +19,10 @@ const Index = () => {
   const startSession = async () => {
     const res = await api.startSession();
     setSessionId(res.sessionId);
-    setScreen("SERVICES");
+    setScreen("DASHBOARD");
   };
 
-  const handleServiceSelect = async (intent: string) => {
+  const handleIntentSelected = async (intent: string) => {
     setPendingIntent(intent);
 
     if (intent === "ESCALATE_AGENT") {
@@ -46,7 +45,6 @@ const Index = () => {
       return;
     }
 
-    // For balance, statement, block card — need OTP
     await api.requestOtp();
     setScreen("OTP");
   };
@@ -92,21 +90,21 @@ const Index = () => {
     setAgentId("");
   };
 
+  const goBack = () => setScreen("DASHBOARD");
+
   switch (screen) {
     case "WELCOME":
       return <WelcomeScreen onStart={startSession} />;
-    case "SERVICES":
-      return <ServicesScreen sessionId={sessionId} onSelect={handleServiceSelect} onChat={() => setScreen("CHAT")} />;
-    case "CHAT":
-      return <ChatScreen sessionId={sessionId} onIntentDetected={handleServiceSelect} onBack={() => setScreen("SERVICES")} />;
+    case "DASHBOARD":
+      return <DashboardScreen sessionId={sessionId} onIntentSelected={handleIntentSelected} />;
     case "OTP":
-      return <OtpScreen sessionId={sessionId} onVerified={handleOtpVerified} onBack={() => setScreen("SERVICES")} />;
+      return <OtpScreen sessionId={sessionId} onVerified={handleOtpVerified} onBack={goBack} />;
     case "RESULT":
       return <ResultScreen sessionId={sessionId} data={resultData} onDone={reset} />;
     case "AGENT":
-      return <AgentScreen sessionId={sessionId} agentId={agentId} onCancel={() => setScreen("SERVICES")} />;
+      return <AgentScreen sessionId={sessionId} agentId={agentId} onCancel={goBack} />;
     case "UPDATE_CONTACT":
-      return <UpdateContactScreen sessionId={sessionId} onSubmit={handleUpdateContact} onBack={() => setScreen("SERVICES")} />;
+      return <UpdateContactScreen sessionId={sessionId} onSubmit={handleUpdateContact} onBack={goBack} />;
     default:
       return <WelcomeScreen onStart={startSession} />;
   }
