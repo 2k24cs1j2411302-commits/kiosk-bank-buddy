@@ -3,7 +3,7 @@ import { api } from "@/services/mockApi";
 import bankLogo from "@/assets/bank-logo.png";
 import {
   Wallet, FileText, ShieldOff, CreditCard, Landmark, MessageSquare,
-  Send, Mic, User, CreditCard as CardIcon, ScanFace, Smartphone, Shield
+  Send, User, CreditCard as CardIcon, ScanFace, Smartphone, Shield
 } from "lucide-react";
 
 interface ChatMsg {
@@ -17,12 +17,12 @@ interface Props {
 }
 
 const services = [
-  { label: "Balance & Statement", sub: "Check balance & mini stmt", intent: "CHECK_BALANCE", icon: <Wallet size={22} />, accent: "bg-primary/10 text-primary border-primary/20" },
-  { label: "Fund Transfer", sub: "NEFT, RTGS, IMPS & UPI", intent: "MINI_STATEMENT", icon: <CreditCard size={22} />, accent: "bg-destructive/10 text-destructive border-destructive/20" },
-  { label: "Card Services", sub: "Block PIN & card mgmt", intent: "BLOCK_CARD", icon: <CardIcon size={22} />, accent: "bg-[hsl(210,60%,50%)]/10 text-[hsl(210,60%,50%)] border-[hsl(210,60%,50%)]/20" },
-  { label: "New Account", sub: "Open savings / current", intent: "UPDATE_CONTACT", icon: <User size={22} />, accent: "bg-[hsl(210,60%,50%)]/10 text-[hsl(210,60%,50%)] border-[hsl(210,60%,50%)]/20" },
-  { label: "Loans & Apply", sub: "Home, Personal & Gold", intent: "LOAN_ENQUIRY", icon: <Landmark size={22} />, accent: "bg-destructive/10 text-destructive border-destructive/20" },
-  { label: "Support & FAQs", sub: "Help, complaints & more", intent: "ESCALATE_AGENT", icon: <MessageSquare size={22} />, accent: "bg-primary/10 text-primary border-primary/20" },
+  { label: "Balance & Statement", sub: "Check balance & mini stmt", intent: "CHECK_BALANCE", icon: <Wallet size={20} />, color: "bg-[hsl(213,56%,24%)] text-white" },
+  { label: "Fund Transfer", sub: "NEFT, RTGS, IMPS & UPI", intent: "MINI_STATEMENT", icon: <CreditCard size={20} />, color: "bg-[hsl(0,72%,51%)] text-white" },
+  { label: "Card Services", sub: "Block PIN & card mgmt", intent: "BLOCK_CARD", icon: <CardIcon size={20} />, color: "bg-[hsl(210,50%,45%)] text-white" },
+  { label: "New Account", sub: "Open savings / current", intent: "UPDATE_CONTACT", icon: <User size={20} />, color: "bg-[hsl(210,50%,45%)] text-white" },
+  { label: "Loans & Apply", sub: "Home, Personal & Gold", intent: "LOAN_ENQUIRY", icon: <Landmark size={20} />, color: "bg-[hsl(0,72%,51%)] text-white" },
+  { label: "Support & FAQs", sub: "Help, complaints & more", intent: "ESCALATE_AGENT", icon: <MessageSquare size={20} />, color: "bg-[hsl(213,56%,24%)] text-white" },
 ];
 
 const recentTxns = [
@@ -94,22 +94,32 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
       <div className="dashboard-body">
         {/* LEFT — AI Assistant */}
         <aside className="dashboard-left">
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex items-center gap-2 mb-1">
             <img src={bankLogo} alt="" className="w-7 h-7" />
             <div>
-              <p className="text-sm font-bold text-white">Aria — AI Assistant</p>
-              <p className="text-[10px] text-white/40">Citizen Bank AI · Powered by Gen-AI</p>
+              <p className="text-xs font-bold text-white">Citizen Bank</p>
+              <p className="text-[9px] font-semibold" style={{ color: "hsl(0 72% 51%)" }}>Good People to Bank With</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 mt-3 mb-1">
+            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+              <User size={12} className="text-white/60" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-white">Aria — AI Assistant</p>
+              <p className="text-[9px] text-white/40">Citizen Bank AI · Powered by Gen-AI</p>
             </div>
           </div>
 
           {/* Voice indicator */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="flex gap-0.5">
+          <div className="flex items-center gap-2 my-2">
+            <div className="flex gap-0.5 items-end">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="w-0.5 bg-primary/60 rounded-full" style={{ height: `${8 + Math.random() * 12}px` }} />
+                <div key={i} className="w-0.5 rounded-full" style={{ height: `${6 + Math.random() * 10}px`, background: "hsl(0 72% 51% / 0.6)" }} />
               ))}
             </div>
-            <p className="text-[10px] text-white/50">Listening? speak or touch a service</p>
+            <p className="text-[9px] text-white/40">Listening? speak or touch a service</p>
           </div>
 
           {/* Chat */}
@@ -153,7 +163,7 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
         {/* CENTER — Services + Transactions */}
         <main className="dashboard-center">
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-foreground" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <h2 className="text-lg font-bold text-primary" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
               What can we help you with?
             </h2>
             <p className="text-xs text-muted-foreground">Touch a service, speak your request, or insert your card to begin</p>
@@ -167,7 +177,7 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
                 onClick={() => onIntentSelected(s.intent)}
                 className="dashboard-service-card"
               >
-                <div className={`w-9 h-9 rounded-lg flex items-center justify-center border ${s.accent}`}>
+                <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${s.color}`}>
                   {s.icon}
                 </div>
                 <div className="mt-2">
@@ -180,8 +190,8 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
 
           {/* Recent Transactions */}
           <div className="dashboard-txn-section">
-            <h3 className="text-xs font-bold text-foreground uppercase tracking-wider mb-2 flex items-center gap-2">
-              <span className="w-1 h-3.5 bg-primary rounded-full" />
+            <h3 className="text-xs font-bold text-primary uppercase tracking-wider mb-2 flex items-center gap-2">
+              <span className="w-1 h-3.5 rounded-full" style={{ background: "hsl(0 72% 51%)" }} />
               Recent Transactions (Last Login)
             </h3>
             <div className="space-y-0">
@@ -191,7 +201,7 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
                     <p className="text-xs font-medium text-foreground">{t.desc}</p>
                     <p className="text-[10px] text-muted-foreground">{t.date}</p>
                   </div>
-                  <span className={`text-xs font-bold font-mono ${t.type === "credit" ? "text-emerald-600" : "text-primary"}`}>
+                  <span className={`text-xs font-bold font-mono ${t.type === "credit" ? "text-[hsl(152,60%,38%)]" : "text-destructive"}`}>
                     {t.amt}
                   </span>
                 </div>
@@ -202,29 +212,28 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
 
         {/* RIGHT — Auth Panel */}
         <aside className="dashboard-right">
-          {/* Auth Methods */}
           <div className="mb-4">
-            <h3 className="text-[11px] font-bold text-primary uppercase tracking-wider mb-3">Authenticate to Begin</h3>
+            <h3 className="text-[11px] font-bold uppercase tracking-wider mb-3" style={{ color: "hsl(152 60% 38%)" }}>Authenticate to Begin</h3>
             <div className="space-y-2">
               <button onClick={() => handleAuth("card")} className={`dashboard-auth-btn ${authMethod === "card" ? "dashboard-auth-btn-active" : ""}`}>
-                <CreditCard size={16} className="text-primary" />
+                <CreditCard size={16} className={authMethod === "card" ? "text-white" : "text-primary"} />
                 <div className="text-left flex-1">
                   <p className="text-xs font-semibold">Insert / Tap Card</p>
-                  <p className="text-[9px] text-muted-foreground">NFC chip or swipe contactless</p>
+                  <p className={`text-[9px] ${authMethod === "card" ? "" : "text-muted-foreground"}`}>NFC chip or swipe contactless</p>
                 </div>
               </button>
               <button onClick={() => handleAuth("face")} className={`dashboard-auth-btn ${authMethod === "face" ? "dashboard-auth-btn-active" : ""}`}>
-                <ScanFace size={16} className="text-muted-foreground" />
+                <ScanFace size={16} className={authMethod === "face" ? "text-white" : "text-muted-foreground"} />
                 <div className="text-left flex-1">
                   <p className="text-xs font-semibold">Face ID</p>
-                  <p className="text-[9px] text-muted-foreground">Camera + biometric verify</p>
+                  <p className={`text-[9px] ${authMethod === "face" ? "" : "text-muted-foreground"}`}>Camera + biometric verify</p>
                 </div>
               </button>
               <button onClick={() => handleAuth("otp")} className={`dashboard-auth-btn ${authMethod === "otp" ? "dashboard-auth-btn-active" : ""}`}>
-                <Smartphone size={16} className="text-muted-foreground" />
+                <Smartphone size={16} className={authMethod === "otp" ? "text-white" : "text-muted-foreground"} />
                 <div className="text-left flex-1">
                   <p className="text-xs font-semibold">Mobile OTP</p>
-                  <p className="text-[9px] text-muted-foreground">Send OTP to registered number</p>
+                  <p className={`text-[9px] ${authMethod === "otp" ? "" : "text-muted-foreground"}`}>Send OTP to registered number</p>
                 </div>
               </button>
             </div>
@@ -234,7 +243,7 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
           {authenticated && (
             <div className="dashboard-account-card">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-[10px] font-bold text-primary uppercase tracking-wider">Authenticated Account</h3>
+                <h3 className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "hsl(152 60% 38%)" }}>Authenticated Account</h3>
                 <Shield size={14} className="text-primary" />
               </div>
               <div className="flex items-center justify-between">
@@ -242,23 +251,23 @@ const DashboardScreen = ({ sessionId, onIntentSelected }: Props) => {
                   <p className="text-sm font-bold text-foreground">Priya Sharma</p>
                   <p className="text-[9px] text-muted-foreground font-mono">A/C XXXXXXXX XXXXXXXXXXXX 4521</p>
                   <p className="text-[10px] text-muted-foreground mt-1">Available balance</p>
-                  <p className="text-lg font-bold text-primary" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  <p className="text-lg font-bold text-destructive" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                     ₹ 1,84,320
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <span className="text-primary font-bold text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>N</span>
+                <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+                  <span className="text-white font-bold text-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>N</span>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 mt-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <p className="text-[9px] text-emerald-600 font-medium">Secure session • RBI compliant • Encrypted</p>
+                <div className="w-1.5 h-1.5 rounded-full" style={{ background: "hsl(152 60% 38%)" }} />
+                <p className="text-[9px] font-medium" style={{ color: "hsl(152 60% 38%)" }}>Secure session • RBI compliant • Encrypted</p>
               </div>
             </div>
           )}
 
           {!authenticated && (
-            <div className="p-4 rounded-xl border-2 border-dashed border-border text-center">
+            <div className="p-4 rounded-lg border-2 border-dashed border-border text-center">
               <User size={24} className="text-muted-foreground mx-auto mb-2" />
               <p className="text-xs text-muted-foreground">Please authenticate to view account details</p>
             </div>

@@ -7,36 +7,38 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 7%;
+    --foreground: 215 25% 15%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 7%;
+    --card-foreground: 215 25% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
-    --primary: 347 77% 50%;
+    --popover-foreground: 215 25% 15%;
+    --primary: 213 56% 24%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 7%;
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 347 77% 96%;
-    --accent-foreground: 347 77% 40%;
-    --destructive: 0 84% 60%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 215 25% 15%;
+    --muted: 210 15% 93%;
+    --muted-foreground: 215 10% 50%;
+    --accent: 213 56% 94%;
+    --accent-foreground: 213 56% 24%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 347 77% 50%;
-    --radius: 0.75rem;
-    --kiosk-dark: 220 20% 10%;
-    --kiosk-surface: 220 15% 15%;
-    --kiosk-glow: 347 77% 50%;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 15%;
-    --sidebar-primary: 347 77% 50%;
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 213 56% 24%;
+    --radius: 0.5rem;
+    --kiosk-dark: 215 35% 12%;
+    --kiosk-surface: 215 30% 16%;
+    --kiosk-glow: 213 56% 24%;
+    --bank-red: 0 72% 51%;
+    --bank-green: 152 60% 38%;
+    --sidebar-background: 215 35% 12%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 213 56% 24%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 15%;
-    --sidebar-border: 0 0% 88%;
-    --sidebar-ring: 347 77% 50%;
+    --sidebar-accent: 215 30% 20%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 215 20% 22%;
+    --sidebar-ring: 213 56% 24%;
   }
 }
 
@@ -61,12 +63,12 @@
   }
 
   .dashboard-header {
-    background: hsl(220 25% 12%);
+    background: hsl(215 35% 14%);
     padding: 0.5rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid hsl(0 0% 100% / 0.06);
+    border-bottom: 1px solid hsl(215 20% 22%);
   }
 
   .dashboard-body {
@@ -77,28 +79,28 @@
   }
 
   .dashboard-left {
-    background: hsl(220 22% 14%);
+    background: hsl(215 35% 14%);
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid hsl(0 0% 100% / 0.06);
+    border-right: 1px solid hsl(215 20% 22%);
   }
 
   .dashboard-center {
-    background: hsl(var(--background));
+    background: hsl(210 20% 97%);
     padding: 1.25rem 1.5rem;
     overflow-y: auto;
   }
 
   .dashboard-right {
-    background: hsl(0 0% 97%);
+    background: hsl(210 15% 95%);
     padding: 1rem;
     border-left: 1px solid hsl(var(--border));
     overflow-y: auto;
   }
 
   .dashboard-footer {
-    background: hsl(220 25% 10%);
+    background: hsl(215 35% 10%);
     padding: 0.375rem 1.25rem;
     display: flex;
     justify-content: space-between;
@@ -122,8 +124,8 @@
   }
 
   .dashboard-bubble-bot {
-    background: hsl(220 18% 22%);
-    color: hsl(0 0% 85%);
+    background: hsl(215 30% 22%);
+    color: hsl(0 0% 88%);
     border-bottom-left-radius: 0.15rem;
   }
 
@@ -136,9 +138,9 @@
   .dashboard-chip {
     padding: 0.2rem 0.5rem;
     border-radius: 9999px;
-    border: 1px solid hsl(var(--primary) / 0.4);
-    background: hsl(var(--primary) / 0.1);
-    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--destructive) / 0.5);
+    background: hsl(var(--destructive) / 0.15);
+    color: hsl(var(--destructive));
     font-size: 0.6rem;
     font-weight: 600;
     cursor: pointer;
@@ -148,23 +150,23 @@
   }
 
   .dashboard-chip:hover {
-    background: hsl(var(--primary) / 0.2);
+    background: hsl(var(--destructive) / 0.25);
   }
 
   .dashboard-input {
     height: 2rem;
     font-size: 0.7rem;
     padding: 0 0.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid hsl(0 0% 100% / 0.1);
-    background: hsl(220 18% 18%);
+    border-radius: 0.375rem;
+    border: 1px solid hsl(215 20% 25%);
+    background: hsl(215 30% 18%);
     color: hsl(var(--primary-foreground));
     font-family: 'Inter', sans-serif;
     outline: none;
   }
 
   .dashboard-input:focus {
-    border-color: hsl(var(--primary) / 0.5);
+    border-color: hsl(210 60% 50%);
   }
 
   .dashboard-input::placeholder {
@@ -174,7 +176,7 @@
   .dashboard-send-btn {
     width: 2rem;
     height: 2rem;
-    border-radius: 0.5rem;
+    border-radius: 0.375rem;
     background: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
     border: none;
@@ -190,19 +192,20 @@
     cursor: not-allowed;
   }
 
+  /* Service cards — colored icon style */
   .dashboard-service-card {
     background: hsl(var(--background));
-    border: 1.5px solid hsl(var(--border));
-    border-radius: 0.75rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
     padding: 0.875rem;
     cursor: pointer;
     text-align: left;
     font-family: 'Inter', sans-serif;
+    transition: box-shadow 0.15s ease, transform 0.1s ease;
   }
 
   .dashboard-service-card:hover {
-    border-color: hsl(var(--primary));
-    box-shadow: 0 4px 12px hsl(var(--primary) / 0.08);
+    box-shadow: 0 4px 16px hsl(var(--primary) / 0.12);
     transform: translateY(-1px);
   }
 
@@ -211,9 +214,9 @@
   }
 
   .dashboard-txn-section {
-    background: hsl(var(--secondary));
+    background: hsl(var(--background));
     border: 1px solid hsl(var(--border));
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     padding: 0.875rem;
   }
 
@@ -223,8 +226,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 0.75rem;
-    border-radius: 0.625rem;
-    border: 1.5px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--border));
     background: hsl(var(--background));
     cursor: pointer;
     font-family: 'Inter', sans-serif;
@@ -237,14 +240,18 @@
 
   .dashboard-auth-btn-active {
     border-color: hsl(var(--primary));
-    background: hsl(var(--primary) / 0.05);
-    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.1);
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .dashboard-auth-btn-active p {
+    color: hsl(var(--primary-foreground)) !important;
   }
 
   .dashboard-account-card {
     background: hsl(var(--background));
-    border: 1.5px solid hsl(var(--border));
-    border-radius: 0.75rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
     padding: 0.875rem;
   }
 
@@ -263,15 +270,15 @@
     width: 100%;
     max-width: 56rem;
     height: 92vh;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 0 0 1px hsl(var(--kiosk-glow) / 0.15), 0 25px 80px -12px hsl(var(--kiosk-dark) / 0.8);
+    box-shadow: 0 25px 80px -12px hsl(var(--kiosk-dark) / 0.8);
   }
 
   .kiosk-header {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(347 85% 42%));
+    background: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
     padding: 1.25rem 2rem;
     display: flex;
@@ -286,7 +293,7 @@
     position: absolute;
     top: 0; right: 0;
     width: 40%; height: 100%;
-    background: linear-gradient(135deg, transparent 40%, hsl(0 0% 100% / 0.08));
+    background: linear-gradient(135deg, transparent 40%, hsl(0 0% 100% / 0.05));
   }
 
   .kiosk-body { flex: 1; padding: 2rem; overflow-y: auto; }
@@ -299,6 +306,7 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    color: hsl(var(--primary));
   }
 
   .kiosk-title::before {
@@ -330,7 +338,7 @@
   .kiosk-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .kiosk-btn-primary {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(347 85% 42%));
+    background: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
     box-shadow: 0 4px 14px -3px hsl(var(--primary) / 0.4);
   }
@@ -413,8 +421,8 @@
   }
 
   .status-badge-success {
-    background: hsl(142 70% 94%);
-    color: hsl(142 70% 30%);
+    background: hsl(152 60% 92%);
+    color: hsl(152 60% 30%);
   }
 
   .spinner {
